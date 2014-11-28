@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+BASE_URL = 'localhost:8000'
+
+STATIC_URL = '/static/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -38,6 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'fossil_app',
+    'db_orm',
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'my_fossil.template_loaders.App_Directoriesloader',
 )
 
 MIDDLEWARE_CLASSES = (
