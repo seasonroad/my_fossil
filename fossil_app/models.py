@@ -18,19 +18,40 @@ class Node(db.Model):
     __tablename__ = 'node'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    ntype_id = Column(Integer)
+    name = Column(String(128))
+    name_cn = Column(String(128))
+
+    ntype_id = Column(Integer, ForeignKey('nodetype.id'))
+    node_type = relationship("NodeType",\
+                 backref=backref('node', cascade="all, delete", order_by=id))
 
     level_num = Column(Integer)
-    level_code = Column(String)
-    parent_id = Column(Integer)
+    level_code = Column(String(64))
+
+    parent_id = Column(Integer, ForeignKey('node.id'), default=None)
+    parent_node = relationship("Node", backref="child", remote_side="Node.id")
+
+    def __init__(self, name, ntype_id, parent_id):
+        self.name = name
+        self.ntype_id = ntype_id
+        if parent_id:
+            self.parent_id = parent_id
+
+    def __repr__(self):
+        return "<Node('%s')>" % self.name
 
 
 class NodeType(db.Model):
     __tablename__ = 'nodetype'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String(128))
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return "<NodeType('%s')>" % self.name
 
 
 class BioKingdom(db.Model):
@@ -39,7 +60,8 @@ class BioKingdom(db.Model):
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
 
-    name = Column(String)
+    name = Column(String(128))
+    name_cn = Column(String(128))
 
 
 class BioPhylum(db.Model):
@@ -48,7 +70,8 @@ class BioPhylum(db.Model):
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
 
-    name = Column(String)
+    name = Column(String(128))
+    name_cn = Column(String(128))
 
 
 class BioClass(db.Model):
@@ -57,7 +80,8 @@ class BioClass(db.Model):
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
 
-    name = Column(String)
+    name = Column(String(128))
+    name_cn = Column(String(128))
 
 
 class BioOrder(db.Model):
@@ -66,7 +90,8 @@ class BioOrder(db.Model):
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
 
-    name = Column(String)
+    name = Column(String(128))
+    name_cn = Column(String(128))
 
 
 class BioGenus(db.Model):
@@ -75,4 +100,5 @@ class BioGenus(db.Model):
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
 
-    name = Column(String)
+    name = Column(String(128))
+    name_cn = Column(String(128))
