@@ -83,13 +83,13 @@ _MAIN_ENGINE = create_engine(
     URL(
         drivername='mysql',
         username='will',
-        password='will1234',
+        password='william1987',
         host='localhost',
         port=3306,
         database='fossil',
     ),
     pool_recycle=True,
-    echo=True,
+    echo=False,
 )
 
 MAIN_SESSION_OPTIONS = {

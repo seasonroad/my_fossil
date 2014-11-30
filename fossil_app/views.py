@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.utils.decorators import classonlymethod
 from django.views.generic import View
 
+from fossil_app.models import *
 
 # Create your views here.
 class BaseView(View):
@@ -54,4 +55,13 @@ class BaseView(View):
 
 class FossilHomeView(BaseView):
     def get(self):
-        return render(self.request, "fossil_app/home.html", {})
+        tree = {'data':[{'text':"P1"}]}
+        tree = Node.mk_child_tree(1)
+        return render(self.request,\
+                             "fossil_app/home.html", {'tree_data':tree})
+
+class FossilPlantView(BaseView):
+    def get(self):
+        tree = Node.mk_child_tree(1)
+        return render(self.request,\
+                             "fossil_app/fossilplant/home.html", {'tree_data':tree})

@@ -5,5 +5,7 @@ from fossil_app.views import *
 
 
 urlpatterns = patterns('fossil_app.views',
-    url(r'^$', FossilHomeView.as_view(), name='fossil_home'),
+    url(r'^$', FossilPlantView.as_view(), name='fossil_home'),
+    url(r'^fossilplant/$', FossilPlantView.as_view(), name='fossil'),
+    url(r'^fossilanimal/$', FossilPlantView.as_view(), name='fossil'),
 )
