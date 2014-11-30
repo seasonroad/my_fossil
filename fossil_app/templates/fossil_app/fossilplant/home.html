@@ -49,20 +49,7 @@
 {% block sidebar %}
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div id="tree"></div>
-          <div class="list-group">
-            <a href="#" class="list-group-item active">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-            <a href="#" class="list-group-item">Link</a>
-          </div>
         </div><!--/.sidebar-offcanvas-->
-      </div><!--/row-->
 {% endblock %}
 
 {% block script_ext %}
@@ -70,4 +57,3 @@
         $('#tree').treeview({data:{{tree_data}}})
     </script>
 {% endblock %}
-

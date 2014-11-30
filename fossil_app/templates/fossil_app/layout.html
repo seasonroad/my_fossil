@@ -1,0 +1,35 @@
+{% extends "fossil_app/base/base.html" %}
+
+{% block css %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+      <div class="row row-offcanvas row-offcanvas-right">
+      {% block main %}{% endblock %}
+      {% block sidebar %}{% endblock %}
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Company 2014</p>
+      </footer>
+    </div><!--/.container-->
+{% endblock %}
+
+{% block script %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}fossil_app/js/jquery-2.1.1.js"></script>
+    <script src="{{ STATIC_URL }}fossil_app/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}fossil_app/js/bootstrap-treeview.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="{{ STATIC_URL}}fossil_app/custom/js/offcanvas.js"></script>
+    {% block script_ext %}
+    {% endblock %}
+{% endblock %}
