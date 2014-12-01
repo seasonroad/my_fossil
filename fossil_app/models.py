@@ -83,10 +83,12 @@ class BioKingdom(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None):
+    def __init__(self, name, name_cn=None, ntype_id=None):
         self.name = name
         if name_cn:
             self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
 
     def __repr__(self):
         return "<BioKindom('%s')>" % self.name
@@ -101,6 +103,13 @@ class BioPhylum(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
     def __repr__(self):
         return "<BioPhylum('%s')>" % self.name
 
@@ -113,6 +122,13 @@ class BioSubPhylum(db.Model):
 
     name = Column(String(128))
     name_cn = Column(String(128))
+
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
 
     def __repr__(self):
         return "<BioSubPhylum('%s')>" % self.name
@@ -127,6 +143,13 @@ class BioClass(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
     def __repr__(self):
         return "<BioClass('%s')>" % self.name
 
@@ -139,6 +162,13 @@ class BioSubClass(db.Model):
 
     name = Column(String(128))
     name_cn = Column(String(128))
+
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
 
     def __repr__(self):
         return "<BioSubClass('%s')>" % self.name
@@ -153,6 +183,13 @@ class BioOrder(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
     def __repr__(self):
         return "<BioOrder('%s')>" % self.name
 
@@ -165,6 +202,13 @@ class BioSubOrder(db.Model):
 
     name = Column(String(128))
     name_cn = Column(String(128))
+
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
 
     def __repr__(self):
         return "<BioSubOrder('%s')>" % self.name
@@ -179,6 +223,13 @@ class BioGenus(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
     def __repr__(self):
         return "<BioGenus('%s')>" % self.name
 
@@ -192,6 +243,13 @@ class BioSubGenus(db.Model):
     name = Column(String(128))
     name_cn = Column(String(128))
 
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
     def __repr__(self):
         return "<BioSubGenus('%s')>" % self.name
 
@@ -204,6 +262,13 @@ class BioNotClear(db.Model):
 
     name = Column(String(128))
     name_cn = Column(String(128))
+
+    def __init__(self, name, name_cn=None, ntype_id=None):
+        self.name = name
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
 
     def __repr__(self):
         return "<BioNotClear('%s')>" % self.name
