@@ -29,7 +29,7 @@ t_k = db.session.query(NodeType)\
                 .filter(NodeType.name=='BioKingdom')\
                 .one()
 k_list = {
-"Plantae:"植物界",
+"Plantae":"植物界",
 "Animalia":"动物界",
 }
 for k,v in k_list.iteritems():
