@@ -28,6 +28,10 @@ class Node(db.Model):
     level_num = Column(Integer)
     level_code = Column(String(64))
 
+    """
+    SQLAlchemy One-to-Many relationship on single table inheritance - declarative
+    http://stackoverflow.com/questions/6782133/sqlalchemy-one-to-many-relationship-on-single-table-inheritance-declarative
+    """
     parent_id = Column(Integer, ForeignKey('node.id'), default=None)
     parent_node = relationship("Node", backref="child_node", remote_side="Node.id")
 
