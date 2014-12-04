@@ -109,7 +109,7 @@ class BioPhylum(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
-    node_id = Column()
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
