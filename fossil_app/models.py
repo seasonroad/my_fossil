@@ -1,3 +1,4 @@
+# –*- encoding:utf8 –*-
 # 1 "../my_fossil/models.py"
 # 1 "<built-in>"
 # 1 "<command-line>"
