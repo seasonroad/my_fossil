@@ -35,8 +35,9 @@ class Node(db.Model):
     parent_id = Column(Integer, ForeignKey('node.id'), default=None)
     parent_node = relationship("Node", backref="child_node", remote_side="Node.id")
 
-    def __init__(self, name, ntype_id, parent_id=None):
+    def __init__(self, name, name_cn, ntype_id, parent_id=None):
         self.name = name
+        self.name_cn = name_cn
         self.ntype_id = ntype_id
         if parent_id:
             self.parent_id = parent_id
@@ -68,6 +69,9 @@ class NodeType(db.Model):
         self.name = name
 
     def mk_node_data(self, node):
+        """
+        Maybe add different additional info for different types of nodes
+        """
         node_data = {}
         node_data['text'] = node.name
         node_data['nodes'] = []
@@ -83,12 +87,14 @@ class BioKingdom(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -103,12 +109,14 @@ class BioPhylum(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column()
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -123,12 +131,14 @@ class BioSubPhylum(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -143,12 +153,14 @@ class BioClass(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -163,12 +175,14 @@ class BioSubClass(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -183,12 +197,14 @@ class BioOrder(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -203,12 +219,14 @@ class BioSubOrder(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -223,12 +241,14 @@ class BioGenus(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -243,12 +263,14 @@ class BioSubGenus(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
@@ -263,12 +285,14 @@ class BioNotClear(db.Model):
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
+    node_id = Column(Integer)
 
     name = Column(String(128))
     name_cn = Column(String(128))
 
-    def __init__(self, name, name_cn=None, ntype_id=None):
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
+        self.node_id = node_id
         if name_cn:
             self.name_cn = name_cn
         if ntype_id:
