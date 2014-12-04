@@ -3,3 +3,33 @@ http://django-china.cn/topic/53/#top
 
 
 https://github.com/divio/django-cms/issues/2744
+
+中文显示问题
+1) Mysql db:
+a) vim /etc/mysql/my.cnf
+ [client]
+ default-character-set = utf8
+ [mysqld]
+ init_connect='SET collation_connection = utf8_unicode_ci'
+ init_connect='SET NAMES utf8'
+ character-set-server=utf8
+ collation-server=utf8_unicode_ci
+ skip-character-set-client-handshake
+
+b) sudo service mysql restart
+
+c) create db and check
+ show variables like "char%"
+ SHOW VARIABLES LIKE 'collation_%';
+ show create table <TABLE_NAME>
+
+2) Update db connect option
+ charset=utf-8
+
+3) Add #encoding=utf-8 in python files
+
+4) set sys def charset as utf-8
+ reload(sys)
+ sys.setdefaultencoding('utf8')
+
+5) use json.dumps
