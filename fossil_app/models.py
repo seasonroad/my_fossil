@@ -1,4 +1,4 @@
-# –*- encoding:utf8 –*-
+#coding=utf-8
 # 1 "../my_fossil/models.py"
 # 1 "<built-in>"
 # 1 "<command-line>"
@@ -74,7 +74,7 @@ class NodeType(db.Model):
         Maybe add different additional info for different types of nodes
         """
         node_data = {}
-        node_data['text'] = node.name
+	node_data['text'] = node.name_cn
         node_data['nodes'] = []
 
         return node_data

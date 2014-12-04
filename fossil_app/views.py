@@ -1,3 +1,6 @@
+#coding=utf-8
+
+import json
 from functools import update_wrapper
 
 from django.conf import settings
@@ -63,5 +66,6 @@ class FossilHomeView(BaseView):
 class FossilPlantView(BaseView):
     def get(self):
         tree = Node.mk_child_tree(1)
+        tree = json.dumps(tree)
         return render(self.request,\
                              "fossil_app/fossilplant/home.html", {'tree_data':tree})
