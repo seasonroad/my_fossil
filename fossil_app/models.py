@@ -246,6 +246,28 @@ class BioSubOrder(db.Model):
         return "<BioSubOrder('%s')>" % self.name
 
 
+class BioFamily(db.Model):
+    __tablename__ = 'biofamily'
+
+    id = Column(Integer, primary_key=True)
+    ntype_id = Column(Integer)
+    node_id = Column(Integer)
+
+    name = Column(String(64))
+    name_cn = Column(String(64))
+
+    def __init__(self, name, node_id, name_cn=None, ntype_id=None):
+        self.name = name
+        self.node_id = node_id
+        if name_cn:
+            self.name_cn = name_cn
+        if ntype_id:
+            self.ntype_id = ntype_id
+
+    def __repr__(self):
+        return "<BioFamily('%s')>" % self.name
+
+
 class BioGenus(db.Model):
     __tablename__ = 'biogenus'
 
