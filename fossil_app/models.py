@@ -19,8 +19,8 @@ class Node(db.Model):
     __tablename__ = 'node'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     ntype_id = Column(Integer, ForeignKey('nodetype.id'))
     node_type = relationship("NodeType",\
@@ -28,6 +28,13 @@ class Node(db.Model):
 
     level_num = Column(Integer)
     level_code = Column(String(64))
+
+    # TODO
+    # enable obj_type, when we plan to add modern plants and animals
+    # obj_type and node_type is different
+    # obj_type: fossil/
+    # node_type: the node level, like kindom/phylum/class
+    #obj_type = Column(Integer)
 
     """
     SQLAlchemy One-to-Many relationship on single table inheritance - declarative
@@ -64,7 +71,7 @@ class NodeType(db.Model):
     __tablename__ = 'nodetype'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(128))
+    name = Column(String(64))
 
     def __init__(self, name):
         self.name = name
@@ -90,8 +97,10 @@ class BioKingdom(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
+
+    note = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -112,8 +121,8 @@ class BioPhylum(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -134,8 +143,8 @@ class BioSubPhylum(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -156,8 +165,8 @@ class BioClass(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -178,8 +187,8 @@ class BioSubClass(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -200,8 +209,8 @@ class BioOrder(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -222,8 +231,8 @@ class BioSubOrder(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -244,8 +253,8 @@ class BioGenus(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -266,8 +275,8 @@ class BioSubGenus(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -288,8 +297,8 @@ class BioNotClear(db.Model):
     ntype_id = Column(Integer)
     node_id = Column(Integer)
 
-    name = Column(String(128))
-    name_cn = Column(String(128))
+    name = Column(String(64))
+    name_cn = Column(String(64))
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -301,3 +310,48 @@ class BioNotClear(db.Model):
 
     def __repr__(self):
         return "<BioNotClear('%s')>" % self.name
+
+
+class Fossil(db.Model):
+    __tablename__ = 'fossil'
+
+    id = Column(Integer, primary_key=True)
+
+    name = Column(String(64))
+    name_cn = Column(String(64))
+
+    owner = Column(String(64))
+
+    country = Column(String(64))
+    province = Column(String(64))
+    city = Column(String(64))
+    where = Column(String(64))
+
+    geo_era = Column(String(64))
+    geo_period = Column(String(64))
+    geo_epoch = Column(String(64))
+    geo_sys = Column(String(64))
+    geo_ser = Column(String(64))
+    geo_group = Column(String(64))
+
+    text = Column(Text)
+    pic_url = Column(String(64))
+
+    def __init__(self):
+        self.name = 'test'
+        self.name_cn = '测试'
+        self.owner = 'William'
+        self.country = 'China'
+        self.province = 'Beijing'
+        self.city = '北京'
+        self.where = "门头沟灰峪"
+
+        self.geo_era = "中生代"
+        self.geo_period = "石炭纪"
+        self.geo_epoch = "早石炭"
+        self.geo_sys = "石炭"
+        self.geo_ser = "石炭"
+        self.geo_group = "山西组"
+
+        self.text = "这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子"
+        self.pic_url = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
