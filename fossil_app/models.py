@@ -74,7 +74,7 @@ class NodeType(db.Model):
         Maybe add different additional info for different types of nodes
         """
         node_data = {}
-	node_data['text'] = node.name_cn
+        node_data['text'] = node.name_cn
         node_data['nodes'] = []
 
         return node_data
