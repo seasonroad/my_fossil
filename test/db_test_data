@@ -1,14 +1,14 @@
 #================Add Type====================#
-t_k = NodeType('BioKingdom')
-t_p = NodeType('BioPhylum')
-t_sp = NodeType('BioSubPhylum')
-t_c = NodeType('BioClass')
-t_sc = NodeType('BioSubClass')
-t_o = NodeType('BioOrder')
-t_so = NodeType('BioSubOrder')
-t_g = NodeType('BioGenus')
-t_sg = NodeType('BioSubGenus')
-t_n = NodeType('BioNotClear')
+#t_k = NodeType('BioKingdom')
+#t_p = NodeType('BioPhylum')
+#t_sp = NodeType('BioSubPhylum')
+#t_c = NodeType('BioClass')
+#t_sc = NodeType('BioSubClass')
+#t_o = NodeType('BioOrder')
+#t_so = NodeType('BioSubOrder')
+#t_g = NodeType('BioGenus')
+#t_sg = NodeType('BioSubGenus')
+#t_n = NodeType('BioNotClear')
 type_list = ['BioKingdom',
              'BioPhylum',
              'BioSubPhylum',
@@ -16,6 +16,7 @@ type_list = ['BioKingdom',
              'BioSubClass',
              'BioOrder',
              'BioSubOrder',
+             'BioFamily',
              'BioGenus',
              'BioSubGenus',
              'BioNotClear']
@@ -29,11 +30,14 @@ t_k = db.session.query(NodeType)\
                 .filter(NodeType.name=='BioKingdom')\
                 .one()
 k_list = {
-"Plantae":"植物界",
-"Animalia":"动物界",
+"Plantae":u"植物界",
+"Animalia":u"动物界",
 }
 for k,v in k_list.iteritems():
-    nk = BioKingdom(k, name_cn=v, ntype_id=t_k.id)
+    node = Node(k, v, t_k.id, parent_id=None)
+    db.session.add(node)
+    db.session.flush()
+    nk = BioKingdom(k, node.id, name_cn=v, ntype_id=t_k.id)
     db.session.add(nk)
 db.session.commit()
 
@@ -41,19 +45,39 @@ db.session.commit()
 t_p = db.session.query(NodeType)\
                 .filter(NodeType.name=='BioPhylum')\
                 .one()
+n_k = db.session.query(Node)\
+                .filter(Node.name=='Plantae')\
+                .one()
 p_list = {
 "Pteridophyta":"蕨类植物门",
 "Gymnospermae":"裸子植物门",
 "Angiospermae":"被子植物门",
 }
 for k,v in p_list.iteritems():
-    np = BioPhylum(k, name_cn=v, ntype_id=t_p.id, parent_id=)
+    node = Node(k, v, t_p.id, parent_id=n_k.id)
+    db.session.add(node)
+    db.session.flush()
+    np = BioPhylum(k, node.id, name_cn=v, ntype_id=t_p.id)
     db.session.add(np)
 db.session.commit()
 
 #==============Add BioClass================#
-t_b = db.session.query(NodeType)\
+t_c = db.session.query(NodeType)\
                 .filter(NodeType.name=='BioClass')\
                 .one()
+n_p = db.session.query(Node)\
+                .filter(Node.name=='Pteridophyta')\
+                .one()
 c_list = {
+"Pteridophyta":"裸蕨纲",
+"Lycopsida":"石松纲",
+"Sphenopsida":"楔叶纲",
+"Filices":"真蕨纲",
 }
+for k,v in c_list.iteritems():
+    node = Node(k, v, t_c.id, parent_id=n_p.id)
+    db.session.add(node)
+    db.session.flush()
+    nc = BioPhylum(k, node.id, name_cn=v, ntype_id=t_c.id)
+    db.session.add(np)
+db.session.commit()
