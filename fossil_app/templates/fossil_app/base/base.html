@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ STATIC_URL }}/fossil_app/custom/css/offcanvas.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}/fossil_app/custom/css/will.css" rel="stylesheet">
 
     {% block css %}{% endblock %}
 
@@ -33,6 +34,29 @@
 <body>
 {% include "fossil_app/base/base_navbar.html" %}
 {% block body %}{% endblock %}
+{% block script %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}fossil_app/js/jquery-2.1.1.js"></script>
+    <script src="{{ STATIC_URL }}fossil_app/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}fossil_app/js/bootstrap-treeview.js"></script>
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script src="{{ STATIC_URL}}fossil_app/custom/js/offcanvas.js"></script>
+
+    <script type="text/javascript">
+    {% block script_ext %}
+          if(location.pathname.split('/')[1]){
+              var a_href="/" + location.pathname.split("/")[1] + "/";
+          } else {
+              var a_href="/";
+          }
+          $('#navbar a[href="' + a_href + '"]').addClass('navactive');
+    {% endblock %}
+    </script>
+{% endblock %}
 </body>
-{% block script %}{% endblock %}
 </html>
