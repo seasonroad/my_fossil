@@ -82,6 +82,7 @@ class NodeType(db.Model):
         """
         node_data = {}
         node_data['text'] = node.name_cn
+        node_data['node_id'] = node.id
         node_data['nodes'] = []
 
         return node_data
@@ -101,6 +102,8 @@ class BioKingdom(db.Model):
     name_cn = Column(String(64))
 
     note = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -124,6 +127,8 @@ class BioPhylum(db.Model):
     name = Column(String(64))
     name_cn = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
         self.node_id = node_id
@@ -145,6 +150,8 @@ class BioSubPhylum(db.Model):
 
     name = Column(String(64))
     name_cn = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -168,6 +175,8 @@ class BioClass(db.Model):
     name = Column(String(64))
     name_cn = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
         self.node_id = node_id
@@ -189,6 +198,8 @@ class BioSubClass(db.Model):
 
     name = Column(String(64))
     name_cn = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -212,6 +223,8 @@ class BioOrder(db.Model):
     name = Column(String(64))
     name_cn = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
         self.node_id = node_id
@@ -233,6 +246,8 @@ class BioSubOrder(db.Model):
 
     name = Column(String(64))
     name_cn = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -256,6 +271,8 @@ class BioFamily(db.Model):
     name = Column(String(64))
     name_cn = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
         self.node_id = node_id
@@ -277,6 +294,8 @@ class BioGenus(db.Model):
 
     name = Column(String(64))
     name_cn = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -300,6 +319,8 @@ class BioSubGenus(db.Model):
     name = Column(String(64))
     name_cn = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
         self.node_id = node_id
@@ -321,6 +342,8 @@ class BioNotClear(db.Model):
 
     name = Column(String(64))
     name_cn = Column(String(64))
+
+    article_id = Column(Integer)
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -359,6 +382,8 @@ class Fossil(db.Model):
     text = Column(Text)
     pic_url = Column(String(64))
 
+    article_id = Column(Integer)
+
     def __init__(self):
         self.name = 'test'
         self.name_cn = '测试'
@@ -377,3 +402,11 @@ class Fossil(db.Model):
 
         self.text = "这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子"
         self.pic_url = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+
+
+class Article(db.Model):
+    __tablename__ = 'article'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(128))
+    text = Column(Text)
