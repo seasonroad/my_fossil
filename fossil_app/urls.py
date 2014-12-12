@@ -8,4 +8,5 @@ urlpatterns = patterns('fossil_app.views',
     url(r'^$', FossilPlantView.as_view(), name='fossil_home'),
     url(r'^fossilplant/$', FossilPlantView.as_view(), name='fossil'),
     url(r'^fossilanimal/$', FossilPlantView.as_view(), name='fossil'),
+    url(r'^fossilplant/tree/(?P<node_id>\w+)/$', FossilSelectView.as_view(), name='fossil'),
 )

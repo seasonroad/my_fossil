@@ -1,0 +1,41 @@
+{% extends "fossil_app/layout.html" %}
+
+{% block css %}
+<link href="{{ STATIC_URL }}fossil_app/custom/css/blog.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <div class="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+          </div>
+          <div class="row" id="main_row"> <!--This is my row start-->
+            <div class="col-xs-6 col-lg-12">
+              <p>here is nothing</p>
+            </div>
+          </div><!--/row-->
+        </div><!--/.col-xs-12.col-sm-9-->
+{% endblock %}
+
+{% block sidebar %}
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div id="tree"></div>
+        </div><!--/.sidebar-offcanvas-->
+{% endblock %}
+
+{% block script_ext %}
+    {{super()}}
+        var $main_row = $("div#main_row");
+        function test_sel_node(event, node) {
+            //$main_row.hide();
+            $main_row.load("/fossilplant/tree/" + node.node_id + "/", function(){$main_row.show();});
+        };
+        var tree_data = {data:{{tree_data}},
+                         onNodeSelected:test_sel_node
+                        };
+        $('#tree').treeview(tree_data);
+{% endblock %}

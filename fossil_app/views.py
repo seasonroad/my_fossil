@@ -12,6 +12,7 @@ from django.utils.decorators import classonlymethod
 from django.views.generic import View
 
 from fossil_app.models import *
+from fossil_app.db_util import *
 
 # Create your views here.
 class BaseView(View):
@@ -63,9 +64,41 @@ class FossilHomeView(BaseView):
         return render(self.request,\
                              "fossil_app/home.html", {'tree_data':tree})
 
+
 class FossilPlantView(BaseView):
     def get(self):
-        tree = Node.mk_child_tree(1)
+        tree = Node.mk_child_tree(2)
         tree = json.dumps(tree)
         return render(self.request,\
-                             "fossil_app/fossilplant/home.html", {'tree_data':tree})
+                             "fossil_app/fossilplant/test.html", {'tree_data':tree})
+
+
+class FossilSelectView(BaseView):
+    def get(self):
+        sel_node = db.session.query(Node).get(self.node_id)
+        rel_class = globals()[sel_node.node_type.name]
+        rel_obj = rel_class.query.filter(rel_class.node_id==sel_node.id).one()
+
+        # Prepare basic introduction
+        if rel_obj.article_id:
+            base_article = Article.query.get(rel_obj.article_id)
+        else:
+            base_article = None
+
+        # Prepare child node introduction
+        sub_articles = []
+        for c_node in sel_node.child_node:
+            c_obj = get_node_obj(c_node.id)
+            if c_obj.article_id:
+                article = Article.query.get(c_obj.article_id)
+                sub_articles.append(article)
+
+        # Prepare related pictures
+        pic_l = []
+
+
+        return render(self.request,\
+                      "fossil_app/fossilplant/fossil_node.html",\
+                      {'base_article':base_article,\
+                       'sub_articles':sub_articles
+                       })
