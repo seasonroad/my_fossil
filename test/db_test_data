@@ -23,7 +23,7 @@ type_list = ['BioKingdom',
 for t in type_list:
     nt = NodeType(t)
     db.session.add(nt)
-db.session.commit()
+db.session.flush()
 
 #==============Add BioKingdom================#
 t_k = db.session.query(NodeType)\
@@ -39,7 +39,7 @@ for k,v in k_list.iteritems():
     db.session.flush()
     nk = BioKingdom(k, node.id, name_cn=v, ntype_id=t_k.id)
     db.session.add(nk)
-db.session.commit()
+db.session.flush()
 
 #==============Add BioPhylum================#
 t_p = db.session.query(NodeType)\
@@ -59,7 +59,7 @@ for k,v in p_list.iteritems():
     db.session.flush()
     np = BioPhylum(k, node.id, name_cn=v, ntype_id=t_p.id)
     db.session.add(np)
-db.session.commit()
+db.session.flush()
 
 #==============Add BioClass================#
 t_c = db.session.query(NodeType)\
@@ -78,6 +78,6 @@ for k,v in c_list.iteritems():
     node = Node(k, v, t_c.id, parent_id=n_p.id)
     db.session.add(node)
     db.session.flush()
-    nc = BioPhylum(k, node.id, name_cn=v, ntype_id=t_c.id)
-    db.session.add(np)
-db.session.commit()
+    nc = BioClass(k, node.id, name_cn=v, ntype_id=t_c.id)
+    db.session.add(nc)
+db.session.flush()
