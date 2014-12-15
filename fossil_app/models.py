@@ -72,9 +72,11 @@ class NodeType(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
+    tag = Column(String(32))
 
-    def __init__(self, name):
+    def __init__(self, name, tag='fossil'):
         self.name = name
+        self.tag = tag
 
     def mk_node_data(self, node):
         """
@@ -333,8 +335,8 @@ class BioSubGenus(db.Model):
         return "<BioSubGenus('%s')>" % self.name
 
 
-class BioNotClear(db.Model):
-    __tablename__ = 'bionotclear'
+class FossilSpecie(db.Model):
+    __tablename__ = 'biofossilspecie'
 
     id = Column(Integer, primary_key=True)
     ntype_id = Column(Integer)
@@ -344,6 +346,7 @@ class BioNotClear(db.Model):
     name_cn = Column(String(64))
 
     article_id = Column(Integer)
+    fossil = relationship("Fossil", backref="specie")
 
     def __init__(self, name, node_id, name_cn=None, ntype_id=None):
         self.name = name
@@ -354,7 +357,7 @@ class BioNotClear(db.Model):
             self.ntype_id = ntype_id
 
     def __repr__(self):
-        return "<BioNotClear('%s')>" % self.name
+        return "<BioSubGenus('%s')>" % self.name
 
 
 class Fossil(db.Model):
@@ -381,8 +384,11 @@ class Fossil(db.Model):
 
     text = Column(Text)
     pic_url = Column(String(64))
+    pic_id = Column(Integer)
+    pic_ids = Column(String(32))
 
     article_id = Column(Integer)
+    specie_id = Column(Integer, ForeignKey('biofossilspecie.id'))
 
     def __init__(self):
         self.name = 'test'
@@ -410,3 +416,12 @@ class Article(db.Model):
     id = Column(Integer, primary_key=True)
     title = Column(String(128))
     text = Column(Text)
+
+
+class Picture(db.Model):
+    __tablename__ = 'picture'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(128))
+    dec = Column(String(512))
+    url = Column(String(128))
