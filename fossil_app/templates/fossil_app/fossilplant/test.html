@@ -29,6 +29,48 @@
 
 {% block script_ext %}
     {{super()}}
+    //<script type="text/javascript">
+    function addNode(){
+        alert("abc");
+    }
+
+    var $AlertForm_Div;
+    function testalert(selnode_id){
+        /*var body=$("body");
+        /*if ($AlertForm_Div) {
+                $AlertForm_Div.remove();
+        }
+        $AlertForm_Div = $('<div id="jquery_alertform_unique_id"><h1>Hello World</h1></div>');
+        body.append($AlertForm_Div);*/
+        var modal_div = $("#ModalDiv4AddNode");
+        modal_div.on("hidden.bs.modal",function(e){$(this).removeData();});
+        modal_div.on("shown.bs.modal",function(e){
+            var modal_bt_save = $("button#addnode_save");
+            modal_bt_save.click(function(e){
+                $form = $("#FormAddNode");
+                e.preventDefault();
+                $form.ajaxSubmit({
+                    type:'POST',
+                    dataType:'json',
+                    beforeSerialize:function(){
+                        //alert('before serialize');
+                    },
+                    beforeSubmit:function(){
+                        //verify the form before submit the form
+                    },
+                    success:function(data){
+                        //
+                        alert(JSON.stringify(data));
+                        modal_div.modal('hide');
+                    }
+                });
+            });
+        })
+        modal_div.modal({'remote':'/fossilplant/add_node/' + selnode_id + '/', 'backdrop':'static', 'show':false});
+        modal_div.modal('show');
+    }
+
+        // side tree
         var $main_row = $("div#main_row");
         function test_sel_node(event, node) {
             //$main_row.hide();

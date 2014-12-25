@@ -1,3 +1,32 @@
+            {% if add_node_flag %}
+            <div class="col-xs-6 col-lg-12"> <!--This is form block-->
+                <!-- Standard button -->
+                <button type="button" class="btn btn-default" onclick="testalert({{ selnode.id }})">Add Node</button>
+
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" href="http://www.baidu.com" data-target="#ModalFormAddNode">Primary</button>
+
+                <!-- Indicates a successful or positive action -->
+                <button type="button" class="btn btn-success">Add Node</button>
+
+                <!-- Contextual button for informational alert messages -->
+                <button type="button" class="btn btn-info">Info</button>
+
+                <!-- Indicates caution should be taken with this action -->
+                <button type="button" class="btn btn-warning">Warning</button>
+
+                <!-- Indicates a dangerous or potentially negative action -->
+                <button type="button" class="btn btn-danger">Danger</button>
+
+                <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+                <button type="button" class="btn btn-link">Link</button>
+
+                <!-- TODO: modal_form_addnode should be child node of body -->
+                <!-- TODO: added dramiticaly when click some button -->
+                {% include "fossil_app/fossilplant/modal_form_addnode.html" %}
+                <hr>
+            </div>
+            {% endif %}
             <div class="col-xs-6 col-lg-12"> <!--This is for base article-->
                 {% if base_article %}
                 {{ base_article.text }}
