@@ -72,10 +72,12 @@ class NodeType(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
+    name_cn = Column(String(64))
     tag = Column(String(32))
 
-    def __init__(self, name, tag='fossil'):
+    def __init__(self, name, name_cn, tag='fossil'):
         self.name = name
+        self.name_cn = name_cn
         self.tag = tag
 
     def mk_node_data(self, node):
