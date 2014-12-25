@@ -1,14 +1,4 @@
 #================Add Type====================#
-#t_k = NodeType('BioKingdom')
-#t_p = NodeType('BioPhylum')
-#t_sp = NodeType('BioSubPhylum')
-#t_c = NodeType('BioClass')
-#t_sc = NodeType('BioSubClass')
-#t_o = NodeType('BioOrder')
-#t_so = NodeType('BioSubOrder')
-#t_g = NodeType('BioGenus')
-#t_sg = NodeType('BioSubGenus')
-#t_n = NodeType('BioNotClear')
 type_list = ['BioKingdom',
              'BioPhylum',
              'BioSubPhylum',
@@ -19,9 +9,24 @@ type_list = ['BioKingdom',
              'BioFamily',
              'BioGenus',
              'BioSubGenus',
-             'BioNotClear']
-for t in type_list:
-    nt = NodeType(t)
+             'FossilSpecie',
+             ]
+type_list_cn = ['界',
+             '门',
+             '亚门',
+             '纲',
+             '亚纲',
+             '目',
+             '亚目',
+             '科',
+             '亚科',
+             '属',
+             '化石(种）',
+             ]
+for i in range(0, len(type_list)):
+    t = type_list[i]
+    tcn = type_list_cn[i]
+    nt = NodeType(t, tcn)
     db.session.add(nt)
 db.session.flush()
 
