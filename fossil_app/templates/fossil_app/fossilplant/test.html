@@ -1,11 +1,11 @@
 {% extends "fossil_app/layout.html" %}
 
 {% block css %}
-<link href="{{ STATIC_URL }}fossil_app/custom/css/blog.css" rel="stylesheet">
+<!--<link href="{{ STATIC_URL }}fossil_app/custom/css/blog.css" rel="stylesheet">-->
 {% endblock %}
 
 {% block main %}
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-lg-9 col-sm-9">
           <p class="pull-right visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
           </p>
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block sidebar %}
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="col-xs-6 col-lg-3 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
           <div id="tree"></div>
         </div><!--/.sidebar-offcanvas-->
 {% endblock %}
@@ -30,21 +30,10 @@
 {% block script_ext %}
     {{super()}}
     //<script type="text/javascript">
-    function addNode(){
-        alert("abc");
-    }
-
-    var $AlertForm_Div;
-    function testalert(selnode_id){
-        /*var body=$("body");
-        /*if ($AlertForm_Div) {
-                $AlertForm_Div.remove();
-        }
-        $AlertForm_Div = $('<div id="jquery_alertform_unique_id"><h1>Hello World</h1></div>');
-        body.append($AlertForm_Div);*/
+    function AddNode(selnode_id){
         var modal_div = $("#ModalDiv4AddNode");
-        modal_div.on("hidden.bs.modal",function(e){$(this).removeData();});
-        modal_div.on("shown.bs.modal",function(e){
+        modal_div.one("hidden.bs.modal",function(e){$(this).removeData();});
+        modal_div.one("shown.bs.modal",function(e){
             var modal_bt_save = $("button#addnode_save");
             modal_bt_save.click(function(e){
                 $form = $("#FormAddNode");
@@ -59,13 +48,17 @@
                         //verify the form before submit the form
                     },
                     success:function(data){
-                        //
-                        alert(JSON.stringify(data));
+                        //refresh the node tree side bar
+                        var ntree_data = {data:JSON.stringify(data)
+                         //onNodeSelected:test_sel_node
+                        };
+                        $('#tree').treeview(ntree_data);
+                        //hide the modal
                         modal_div.modal('hide');
                     }
                 });
             });
-        })
+        });
         modal_div.modal({'remote':'/fossilplant/add_node/' + selnode_id + '/', 'backdrop':'static', 'show':false});
         modal_div.modal('show');
     }
