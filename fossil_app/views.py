@@ -98,20 +98,7 @@ class FossilSelectView(BaseView):
 
         # child type list
         add_node_flag = True
-        child_types = []
-        if sel_node.node_type.name == 'BioPhylum': # 门
-            type_names = ['BioSubPhylum','BioClass']
-        elif sel_node.node_type.name == 'BioClass': # 纲
-            type_names = ['BioSubClass', 'BioOrder', 'FossilSpecie']
-        elif sel_node.node_type.name == 'BioOrder': # 目
-            type_names = ['BioSubOrder', 'BioFamily', 'BioGenus', 'FossilSpecie']
-        elif sel_node.node_type.name == 'BioGenus': # 属
-            type_names = ['FossilSpecie']
-        else:
-            type_names = []
-        for tn in type_names:
-            t = NodeType.query.filter(NodeType.name==tn and NodeType.tag=="fossil").one()
-            child_types.append(t)
+        child_types = get_fossil_child_types(sel_node)
         if not child_types:
             add_node_flag = False
 
@@ -131,20 +118,7 @@ class FossilAddNodeView(BaseView):
         sel_node = db.session.query(Node).get(self.node_id)
 
         # child type list
-        child_types = []
-        if sel_node.node_type.name == 'BioPhylum': # 门
-            type_names = ['BioSubPhylum','BioClass']
-        elif sel_node.node_type.name == 'BioClass': # 纲
-            type_names = ['BioSubClass', 'BioOrder', 'FossilSpecie']
-        elif sel_node.node_type.name == 'BioOrder': # 目
-            type_names = ['BioSubOrder', 'BioFamily', 'BioGenus', 'FossilSpecie']
-        elif sel_node.node_type.name == 'BioGenus': # 属
-            type_names = ['FossilSpecie']
-        else:
-            type_names = []
-        for tn in type_names:
-            t = NodeType.query.filter(NodeType.name==tn and NodeType.tag=="fossil").one()
-            child_types.append(t)
+        child_types = get_fossil_child_types(sel_node)
 
         return render(self.request,\
                       "fossil_app/fossilplant/modal_body_add_node.html",\
@@ -152,11 +126,25 @@ class FossilAddNodeView(BaseView):
                        'parent_node':sel_node,\
                        'types':child_types,\
                        })
+
     def post(self):
-        print self.POST
         parent_node = Node.query.get(self.POST['fPId'])
         node_type = NodeType.query.get(self.POST['fTId'])
-        node_name = self.POST['fName']
-        node_name_cn = self.POST['fNameCN']
+        parent_id = int(self.POST['fPId'])
+        ntype_id = int(self.POST['fTId'])
+        new_name = self.POST['fName']
+        new_name_cn = self.POST['fNameCN']
 
-        return 0
+        # TODO
+        # Combine Node() and NewNodeObj() into class method or into
+        # a single function
+        new_node = Node(new_name, new_name_cn, ntype_id, parent_id)
+        db.session.add(new_node)
+        db.session.flush()
+        new_obj = create_node_obj(node_type, new_node)
+        db.session.add(new_obj)
+
+        tree = Node.mk_child_tree(2)
+        tree = json.dumps(tree)
+
+        return tree
