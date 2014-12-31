@@ -362,51 +362,130 @@ class FossilSpecie(db.Model):
         return "<BioSubGenus('%s')>" % self.name
 
 
+class GeoEon(db.Model):
+    """宙"""
+    __tablename__ = 'geo_eon'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(32))
+    name_cn = Column(String(64))
+    start_ma = Column(String(16))
+    end_ma = Column(String(16))
+
+
+class GeoEra(db.Model):
+    """代"""
+    __tablename__ = 'geo_era'
+
+    id = Column(Integer, primary_key=True)
+    geoeon_id = Column(Integer, ForeignKey('geo_eon.id'))
+    geoeon = relationship("GeoEon",\
+                 backref=backref('geoera', cascade="all, delete", order_by=id))
+    name = Column(String(32))
+    name_cn = Column(String(64))
+    start_ma = Column(String(16))
+    end_ma = Column(String(16))
+
+
+class GeoPeriod(db.Model):
+    """纪"""
+    __tablename__ = 'geo_period'
+
+    id = Column(Integer, primary_key=True)
+    geoera_id = Column(Integer, ForeignKey('geo_era.id'))
+    geoera = relationship("GeoEra",\
+                 backref=backref('geoperiod', cascade="all, delete", order_by=id))
+    name = Column(String(32))
+    name_cn = Column(String(64))
+    start_ma = Column(String(16))
+    end_ma = Column(String(16))
+
+
+class GeoEpoch(db.Model):
+    """世"""
+    __tablename__ = 'geo_epoch'
+
+    id = Column(Integer, primary_key=True)
+    geoperiod_id = Column(Integer, ForeignKey('geo_period.id'))
+    geoperiod = relationship("GeoPeriod",\
+                 backref=backref('geoepoch', cascade="all, delete", order_by=id))
+    name = Column(String(32))
+    name_cn = Column(String(64))
+    start_ma = Column(String(16))
+    end_ma = Column(String(16))
+
+
+class GeoSystem(db.Model):
+    """系"""
+    __tablename__ = 'geo_system'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(32))
+    name_cn = Column(String(64))
+
+#class GeoSeries(db.Model):
+#    """统"""
+
+
+class GeoGroup(db.Model):
+    """岩层单位：群"""
+    __tablename__ = 'geo_group'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(32))
+    name_cn = Column(String(64))
+
+
+class GeoFormation(db.Model):
+    """岩层单位：组"""
+    __tablename__ = 'geo_formation'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(64))
+    name_cn = Column(String(64))
+
+
 class Fossil(db.Model):
     __tablename__ = 'fossil'
 
     id = Column(Integer, primary_key=True)
-
     name = Column(String(64))
     name_cn = Column(String(64))
-
     owner = Column(String(64))
 
-    country = Column(String(64))
-    province = Column(String(64))
-    city = Column(String(64))
+    country_id = Column(Integer)
+    province_id = Column(Integer)
+    city_id = Column(Integer)
     where = Column(String(64))
 
-    geo_era = Column(String(64))
-    geo_period = Column(String(64))
-    geo_epoch = Column(String(64))
-    geo_sys = Column(String(64))
-    geo_ser = Column(String(64))
-    geo_group = Column(String(64))
+    geo_era_id = Column(Integer)        #代
+    geo_period_id = Column(Integer)     #纪
+    geo_epoch_id = Column(Integer)      #世
+    geo_group_id = Column(Integer)      #群
+    geo_formation_id = Column(Integer)  #组
 
-    text = Column(Text)
-    pic_url = Column(String(64))
+    desc = Column(Text)
+    cover_pic_url = Column(String(64))
     pic_id = Column(Integer)
     pic_ids = Column(String(32))
 
     article_id = Column(Integer)
     specie_id = Column(Integer, ForeignKey('biofossilspecie.id'))
 
-    def __init__(self):
-        self.name = 'test'
-        self.name_cn = '测试'
-        self.owner = 'William'
-        self.country = 'China'
-        self.province = 'Beijing'
-        self.city = '北京'
-        self.where = "门头沟灰峪"
-
-        self.geo_era = "中生代"
-        self.geo_period = "石炭纪"
-        self.geo_epoch = "早石炭"
-        self.geo_sys = "石炭"
-        self.geo_ser = "石炭"
-        self.geo_group = "山西组"
+    def __init__(self, **kwargs):
+        self.name = kwargs['name']
+        self.name_cn = kwargs['name_cn']
+        self.owner = kwargs['owner']
+        self.country_id = kwargs['country_id']
+        self.province_id = kwargs['province_id']
+        self.city_id = kwargs['city_id']
+        self.where = kwargs['where']
+        self.geo_era_id = kwargs['geo_era_id']
+        self.geo_period_id = kwargs['geo_period_id']
+        self.geo_epoch_id = kwargs['geo_epoch_id']
+        self.geo_group_id = kwargs['geo_group_id']
+        self.geo_formation_id = kwargs['geo_formation_id']
+        self.desc = kwargs['geo_formation_id']
 
         self.text = "这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子而已，这些只是为了测试一下子"
         self.pic_url = "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -427,3 +506,38 @@ class Picture(db.Model):
     name = Column(String(128))
     dec = Column(String(512))
     url = Column(String(128))
+
+
+class Country(db.Model):
+    __tablename__ = 'country'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(64))
+    name_cn = Column(String(64))
+    short_name = Column(String(8))
+
+
+class Province(db.Model):
+    __tablename__ = 'province'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(64))
+    name_cn = Column(String(64))
+    name_cn_short = Column(String(32))
+
+
+class City(db.Model):
+    __tablename__ = 'city'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(64))
+    name_cn = Column(String(64))
+
+
+class Location(db.Model):
+    __tablename__ = 'location'
+
+    id = Column(Integer, primary_key=True)
+    longitude = Column(String(32))
+    latitude = Column(String(32))
+    addr = Column(String(128))
